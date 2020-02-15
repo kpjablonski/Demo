@@ -10,8 +10,6 @@ namespace Demo
             {
                 new User();
             }
-
-            
         }
     }
 
