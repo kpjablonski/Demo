@@ -6,10 +6,6 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            while (true)
-            {
-                new User();
-            }
         }
     }
 
