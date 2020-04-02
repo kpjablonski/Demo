@@ -24,13 +24,12 @@ namespace Demo
 
             var createTableAdsCommand = new SqlCommand();
             createTableAdsCommand.Connection = connection;
-            createTableAdsCommand.CommandText = 
+            createTableAdsCommand.CommandText =
                 @"Create Table Ads (
                 Id BIGINT PRIMARY KEY,
                 Number TEXT 
-                )
-                INSERT INTO Ads (Id, Number)
-                VALUES (3 , 'x')";
+                )";
+               
 
             connection.Open();
             createTableAdsCommand.ExecuteNonQuery();
@@ -38,21 +37,16 @@ namespace Demo
 
             // insert
             var connection2 = new SqlConnection();
-            connection2.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            connection2.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
             connection2.Open();
 
             var insertData = new SqlCommand();
             insertData.Connection = connection2;
             insertData.CommandText =
-                @"Create Table Ads (
-                Id BIGINT PRIMARY KEY,
-                Number TEXT 
-                )
+                @"
                 INSERT INTO Ads (Id, Number)
                 VALUES (3 , 'x')";
 
-
-            connection2.Open();
             insertData.ExecuteNonQuery();
             connection2.Close();
 
