@@ -6,34 +6,8 @@ namespace Demo
     class Program
     {
         static void Main(string[] args)
-        { 
-            // database
-            var connection = new SqlConnection();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
-            connection.Open();
-
-            var command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "Create Database Bzp";
-            command.ExecuteNonQuery();
-
-            connection.Close();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
-            
-            // table
-
-            var createTableAdsCommand = new SqlCommand();
-            createTableAdsCommand.Connection = connection;
-            createTableAdsCommand.CommandText =
-                @"Create Table Ads (
-                Id BIGINT PRIMARY KEY,
-                Number TEXT 
-                )";
-               
-
-            connection.Open();
-            createTableAdsCommand.ExecuteNonQuery();
-            connection.Close();
+        {
+            NewMethod();
 
             // insert
             var connection2 = new SqlConnection();
@@ -55,6 +29,37 @@ namespace Demo
 
 
 
+        }
+
+        private static void NewMethod()
+        {
+            // database
+            var connection = new SqlConnection();
+            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            connection.Open();
+
+            var command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "Create Database Bzp";
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
+
+            // table
+
+            var createTableAdsCommand = new SqlCommand();
+            createTableAdsCommand.Connection = connection;
+            createTableAdsCommand.CommandText =
+                @"Create Table Ads (
+                Id BIGINT PRIMARY KEY,
+                Number TEXT 
+                )";
+
+
+            connection.Open();
+            createTableAdsCommand.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }
