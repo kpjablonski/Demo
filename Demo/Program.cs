@@ -7,7 +7,7 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            NewMethod();
+            CreateDataBaseAndTables();
 
             // insert
             var connection2 = new SqlConnection();
@@ -31,7 +31,7 @@ namespace Demo
 
         }
 
-        private static void NewMethod()
+        private static void CreateDataBaseAndTables()
         {
             // database
             var connection = new SqlConnection();
