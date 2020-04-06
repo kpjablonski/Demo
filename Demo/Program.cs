@@ -5,21 +5,31 @@ namespace Demo
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             CreateDataBaseAndTables();
 
+            Ogloszenie ogl = new Ogloszenie();
+            ogl.Id = 4;
+            ogl.Number = "5100598652020";
+            ogl.DataPublikacji = 4042020;
+            ogl.Miejscowosc = "Warszawa";
+            ogl.Plik = "Pobierz";
+
+
+
+
             // insert
             // inser mozna zastapic ad i ads klasami ktore byly tworzone
-            var connection2 = new SqlConnection();
+            SqlConnection connection2 = new SqlConnection();
             connection2.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
             connection2.Open();
 
             var insertData = new SqlCommand();
             insertData.Connection = connection2;
-            insertData.CommandText = @"
+            insertData.CommandText = $@"
                 INSERT INTO Ads (Id, Number, DataPublikacji, Miejscowosc, Plik)
-                VALUES (3 , '510059865-N-2020', '06_04_2020', 'Wilkasy', 'Zobacz' )";
+                VALUES ({ogl.Id}, '{ogl.Number}', {ogl.DataPublikacji}, {ogl.Miejscowosc}, {ogl.Plik})";
 
             insertData.ExecuteNonQuery();
             connection2.Close();

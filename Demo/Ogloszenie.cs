@@ -10,6 +10,8 @@ namespace Demo
         public string Number { get; set; }
         public long DataPublikacji { get; set; }
         public string Miejscowosc { get; set; }
+        public string Plik { get; set; }
+
 
     }
 }
