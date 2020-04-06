@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Demo
 {
-    class Ogloszenie
+    public class Ogloszenie
     {
         public int Id;
         public long Number;

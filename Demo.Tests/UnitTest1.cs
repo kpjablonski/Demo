@@ -21,7 +21,17 @@ namespace Demo.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            Console.WriteLine($"Hello Grooby");
+            var program = new Program();
+            program.CreateDataBaseAndTables();
+
+            Ogloszenie ogl = new Ogloszenie();
+            //ogl.Id = 1234;
+            ogl.Number = 4445566;
+            ogl.DataPublikacji = 30032020;
+            ogl.Miejscowosc = "Wilkasy";
+            ogl.Plik = "taki";
+
+            ogl.InsertAutomat();
         }
     }
 }

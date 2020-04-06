@@ -3,24 +3,13 @@ using System.Data.SqlClient;
 
 namespace Demo
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            CreateDataBaseAndTables();
-
-            Ogloszenie ogl = new Ogloszenie();
-            //ogl.Id = 1234;
-            ogl.Number = 4445566;
-            ogl.DataPublikacji = 30032020;
-            ogl.Miejscowosc = "Wilkasy";
-            ogl.Plik = "taki";
-
-
-            ogl.InsertAutomat();
         }
 
-        private static void CreateDataBaseAndTables()
+        public void CreateDataBaseAndTables()
         {
             // database
             var connection = new SqlConnection();
