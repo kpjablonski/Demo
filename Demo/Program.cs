@@ -7,14 +7,14 @@ namespace Demo
     {
         public static void Main(string[] args)
         {
-            CreateDataBaseAndTables();
+            //CreateDataBaseAndTables();
 
             Ogloszenie ogl = new Ogloszenie();
-            ogl.Id = 4;
-            ogl.Number = "5100598652020";
-            ogl.DataPublikacji = 4042020;
-            ogl.Miejscowosc = "Warszawa";
-            ogl.Plik = "Pobierz";
+            Console.WriteLine(ogl.Id);
+            Console.ReadKey(true);
+            ogl.InsertAutomat();
+            Console.ReadLine();
+
 
 
 
