@@ -33,5 +33,8 @@ namespace Demo.Tests
 
             ogl.InsertAutomat();
         }
+
+        // dopisac metodê testow¹  - [TestMethod] musi byæ nad nazw¹ metody,
+        // w której dodamy do bazy dwa ró¿ne og³oszenia
     }
 }
