@@ -10,7 +10,7 @@ namespace Demo
             CreateDataBaseAndTables();
 
             Ogloszenie ogl = new Ogloszenie();
-            ogl.Id = 1234;
+            //ogl.Id = 1234;
             ogl.Number = 4445566;
             ogl.DataPublikacji = 30032020;
             ogl.Miejscowosc = "Wilkasy";
@@ -47,7 +47,7 @@ namespace Demo
                @"IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE name = 'Ads' AND xtype = 'U')
                 BEGIN
                     CREATE TABLE Ads(
-                        Id BIGINT PRIMARY KEY,
+                        Id BIGINT IDENTITY(1, 1),
                         Number TEXT,
                         DataPublikacji VARCHAR(255),
                         Miejscowosc TEXT,

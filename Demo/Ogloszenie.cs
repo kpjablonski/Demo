@@ -23,8 +23,8 @@ namespace Demo
             var insertData = new SqlCommand();
             insertData.Connection = connection2;
             insertData.CommandText = $@"
-                 INSERT INTO Ads (Id, Number, DataPublikacji, Miejscowosc, Plik)
-                 VALUES ({Id}, '{Number}', '{DataPublikacji}', '{Miejscowosc}', '{Plik}')";
+                 INSERT INTO Ads (Number, DataPublikacji, Miejscowosc, Plik)
+                 VALUES ('{Number}', '{DataPublikacji}', '{Miejscowosc}', '{Plik}')";
 
             insertData.ExecuteNonQuery();
             connection2.Close();
