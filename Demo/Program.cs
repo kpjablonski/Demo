@@ -7,13 +7,19 @@ namespace Demo
     {
         public static void Main(string[] args)
         {
-            //CreateDataBaseAndTables();
+            CreateDataBaseAndTables();
 
-            Ogloszenie ogl = new Ogloszenie();
-            Console.WriteLine(ogl.Id);
-            Console.ReadKey(true);
-            ogl.InsertAutomat();
-            Console.ReadLine();
+            //Ogloszenie ogl = new Ogloszenie();
+            //ogl.Id = 1234;
+            //ogl.Number = 4445566;
+            //ogl.DataPublikacji = 30032020;
+            //ogl.Miejscowosc = "Wilkasy";
+            //ogl.Plik = "taki";
+
+            ////Console.WriteLine(ogl.Id);
+            ////Console.ReadKey(true);
+            ////ogl.InsertAutomat();
+            ////Console.ReadLine();
 
 
 
@@ -29,7 +35,8 @@ namespace Demo
             insertData.Connection = connection2;
             insertData.CommandText = $@"
                 INSERT INTO Ads (Id, Number, DataPublikacji, Miejscowosc, Plik)
-                VALUES ({ogl.Id}, '{ogl.Number}', {ogl.DataPublikacji}, {ogl.Miejscowosc}, {ogl.Plik})";
+                VALUES (3 , '510059865-N-2020', '06_04_2020', 'Wilkasy', 'Zobacz' )";
+            //VALUES ({ogl.Id}, '{ogl.Number}', {ogl.DataPublikacji}, {ogl.Miejscowosc}, {ogl.Plik})";
 
             insertData.ExecuteNonQuery();
             connection2.Close();
