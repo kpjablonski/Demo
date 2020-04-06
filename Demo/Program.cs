@@ -9,53 +9,15 @@ namespace Demo
         {
             CreateDataBaseAndTables();
 
-            //Ogloszenie ogl = new Ogloszenie();
-            //ogl.Id = 1234;
-            //ogl.Number = 4445566;
-            //ogl.DataPublikacji = 30032020;
-            //ogl.Miejscowosc = "Wilkasy";
-            //ogl.Plik = "taki";
-
-            ////Console.WriteLine(ogl.Id);
-            ////Console.ReadKey(true);
-            ////ogl.InsertAutomat();
-            ////Console.ReadLine();
+            Ogloszenie ogl = new Ogloszenie();
+            ogl.Id = 1234;
+            ogl.Number = 4445566;
+            ogl.DataPublikacji = 30032020;
+            ogl.Miejscowosc = "Wilkasy";
+            ogl.Plik = "taki";
 
 
-
-
-
-            // insert
-            // inser mozna zastapic ad i ads klasami ktore byly tworzone
-            SqlConnection connection2 = new SqlConnection();
-            connection2.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
-            connection2.Open();
-
-            var insertData = new SqlCommand();
-            insertData.Connection = connection2;
-            insertData.CommandText = $@"
-                INSERT INTO Ads (Id, Number, DataPublikacji, Miejscowosc, Plik)
-                VALUES (3 , '510059865-N-2020', '06_04_2020', 'Wilkasy', 'Zobacz' )";
-            //VALUES ({ogl.Id}, '{ogl.Number}', {ogl.DataPublikacji}, {ogl.Miejscowosc}, {ogl.Plik})";
-
-            insertData.ExecuteNonQuery();
-            connection2.Close();
-
-            //var insertNewValues = new SqlCommand();
-            //insertNewValues.Connection = connection;
-
-            //BLEDY:
-            //String or binary data would be truncated
-            // Tabela byla nastepujaca:
-            // CREATE TABLE Ads(
-            //Id BIGINT PRIMARY KEY,
-            //Number TEXT,
-            //            Data_Publikacji VARCHAR(255),
-            //            Miejscowosc TEXT,
-            //            Plik VARCHAR(255),
-
-
-
+            ogl.InsertAutomat();
         }
 
         private static void CreateDataBaseAndTables()
