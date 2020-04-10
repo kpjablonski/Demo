@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Data.SqlClient;
 
 namespace Demo.Tests
 {
@@ -10,12 +11,42 @@ namespace Demo.Tests
         public void Initialize()
         {
             // stwórz baze
+            var connection = new SqlConnection();
+            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            connection.Open();
+
+            var command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = @"
+             IF NOT EXISTS(SELECT 1 FROM sysdatabases WHERE name = 'Bzp')
+             BEGIN
+                CREATE DATABASE Bzp;
+             END";
+            command.ExecuteNonQuery();
+
+            connection.Close();
+            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
         }
 
         [TestCleanup]
         public void Cleanup()
         {
             // wywal baze
+            //var connection = new SqlConnection();
+            //connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            //connection.Open();
+
+            //var command = new SqlCommand();
+            //command.Connection = connection;
+            //command.CommandText = @"
+            // IF EXISTS(SELECT 1 FROM sysdatabases WHERE name = 'Bzp')
+            // BEGIN
+            //    DROP DATABASE Bzp;
+            // END";
+            //command.ExecuteNonQuery();
+
+            //connection.Close();
+            //connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
         }
 
         [TestMethod]
@@ -33,8 +64,42 @@ namespace Demo.Tests
 
             ogl.InsertAutomat();
         }
-
         // dopisac metodê testow¹  - [TestMethod] musi byæ nad nazw¹ metody,
         // w której dodamy do bazy dwa ró¿ne og³oszenia
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var program = new Program();
+            program.CreateDataBaseAndTables();
+
+            Ogloszenie ogl = new Ogloszenie();
+            //ogl.Id = 1234;
+            ogl.Number = 234;
+            ogl.DataPublikacji = 456780011;
+            ogl.Miejscowosc = "Zabki";
+            ogl.Plik = "ptaki";
+
+            ogl.InsertAutomat();
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            var program = new Program();
+            program.CreateDataBaseAndTables();
+
+            Ogloszenie ogl = new Ogloszenie();
+            //ogl.Id = 1234;
+            ogl.Number = 3333344;
+            ogl.DataPublikacji = 11111;
+            ogl.Miejscowosc = "Wuhan";
+            ogl.Plik = "Covid19";
+
+            ogl.InsertAutomat();
+        }
+            
+
+        
     }
 }
