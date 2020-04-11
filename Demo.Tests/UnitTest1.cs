@@ -17,8 +17,9 @@ namespace Demo.Tests
         [TestCleanup]
         public void Cleanup()
         {
+            var connectionString = new ConnectionStrings();
             var connection = new SqlConnection();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            connection.ConnectionString = connectionString.Master();
             connection.Open();
 
             var command = new SqlCommand();
@@ -26,9 +27,9 @@ namespace Demo.Tests
             command.CommandText = @"
              IF EXISTS(SELECT 1 FROM sysdatabases WHERE name = 'Bzp')
              BEGIN
-            ALTER DATABASE Bzp
-            SET SINGLE_USER
-            WITH ROLLBACK IMMEDIATE;
+                ALTER DATABASE Bzp
+                SET SINGLE_USER
+                WITH ROLLBACK IMMEDIATE;
                 DROP DATABASE Bzp;
              END";
             command.ExecuteNonQuery();

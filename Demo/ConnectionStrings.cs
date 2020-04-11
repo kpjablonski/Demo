@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Demo
 {
-    class ConnectionStrings
+    public class ConnectionStrings
     {
         public string Master()
         {
