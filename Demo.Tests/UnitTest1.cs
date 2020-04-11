@@ -32,21 +32,24 @@ namespace Demo.Tests
         public void Cleanup()
         {
             // wywal baze
-            //var connection = new SqlConnection();
-            //connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
-            //connection.Open();
+            var connection = new SqlConnection();
+            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            connection.Open();
 
-            //var command = new SqlCommand();
-            //command.Connection = connection;
-            //command.CommandText = @"
-            // IF EXISTS(SELECT 1 FROM sysdatabases WHERE name = 'Bzp')
-            // BEGIN
-            //    DROP DATABASE Bzp;
-            // END";
-            //command.ExecuteNonQuery();
+            var command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = @"
+             IF EXISTS(SELECT 1 FROM sysdatabases WHERE name = 'Bzp')
+             BEGIN
+            ALTER DATABASE Bzp
+            SET SINGLE_USER
+            WITH ROLLBACK IMMEDIATE;
+                DROP DATABASE Bzp;
+             END";
+            command.ExecuteNonQuery();
 
-            //connection.Close();
-            //connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
+            connection.Close();
+            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
         }
 
         [TestMethod]
