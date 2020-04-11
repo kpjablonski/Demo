@@ -15,9 +15,11 @@ namespace Demo
 
         public void InsertAutomat()
         {
+            var connectionString = new ConnectionStrings();
+
             //Console.WriteLine($"{Id}; { Number}; { DataPublikacji}; { Miejscowosc}; { Plik}");
             SqlConnection connection2 = new SqlConnection();
-            connection2.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
+            connection2.ConnectionString = connectionString.Bzp();
             connection2.Open();
 
             var insertData = new SqlCommand();

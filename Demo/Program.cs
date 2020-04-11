@@ -12,8 +12,11 @@ namespace Demo
         public void CreateDataBaseAndTables()
         {
             // database
+            var connectionStrings = new ConnectionStrings();
+
+
             var connection = new SqlConnection();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
+            connection.ConnectionString = connectionStrings.Master();
             connection.Open();
 
             var command = new SqlCommand();
@@ -26,7 +29,7 @@ namespace Demo
             command.ExecuteNonQuery();
 
             connection.Close();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
+            connection.ConnectionString = connectionStrings.Bzp();
 
             // table
 
