@@ -14,7 +14,6 @@ namespace Demo
             // database
             var connectionStrings = new ConnectionStrings();
 
-
             var connection = new SqlConnection();
             connection.ConnectionString = connectionStrings.Master();
             connection.Open();

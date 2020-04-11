@@ -32,6 +32,10 @@ namespace Demo
             connection2.Close();
         }
 
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 //
