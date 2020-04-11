@@ -11,21 +11,8 @@ namespace Demo.Tests
         public void Initialize()
         {
             // stwórz baze
-            var connection = new SqlConnection();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
-            connection.Open();
-
-            var command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = @"
-             IF NOT EXISTS(SELECT 1 FROM sysdatabases WHERE name = 'Bzp')
-             BEGIN
-                CREATE DATABASE Bzp;
-             END";
-            command.ExecuteNonQuery();
-
-            connection.Close();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
+            var program = new Program();
+            program.CreateDataBaseAndTables();
         }
 
         [TestCleanup]
@@ -55,9 +42,6 @@ namespace Demo.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var program = new Program();
-            program.CreateDataBaseAndTables();
-
             Ogloszenie ogl = new Ogloszenie();
             //ogl.Id = 1234;
             ogl.Number = 4445566;
@@ -73,9 +57,6 @@ namespace Demo.Tests
         [TestMethod]
         public void TestMethod2()
         {
-            var program = new Program();
-            program.CreateDataBaseAndTables();
-
             Ogloszenie ogl = new Ogloszenie();
             //ogl.Id = 1234;
             ogl.Number = 234;
@@ -89,9 +70,6 @@ namespace Demo.Tests
         [TestMethod]
         public void TestMethod3()
         {
-            var program = new Program();
-            program.CreateDataBaseAndTables();
-
             Ogloszenie ogl = new Ogloszenie();
             //ogl.Id = 1234;
             ogl.Number = 3333344;
