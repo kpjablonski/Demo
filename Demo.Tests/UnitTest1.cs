@@ -10,7 +10,6 @@ namespace Demo.Tests
         [TestInitialize]
         public void Initialize()
         {
-            // stwórz baze
             var program = new Program();
             program.CreateDataBaseAndTables();
         }
@@ -18,7 +17,6 @@ namespace Demo.Tests
         [TestCleanup]
         public void Cleanup()
         {
-            // wywal baze
             var connection = new SqlConnection();
             connection.ConnectionString = "Server=localhost\\SQLExpress;Database=master;Trusted_Connection=True;";
             connection.Open();
@@ -36,14 +34,12 @@ namespace Demo.Tests
             command.ExecuteNonQuery();
 
             connection.Close();
-            connection.ConnectionString = "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
         }
 
         [TestMethod]
         public void TestMethod1()
         {
             Ogloszenie ogl = new Ogloszenie();
-            //ogl.Id = 1234;
             ogl.Number = 4445566;
             ogl.DataPublikacji = 30032020;
             ogl.Miejscowosc = "Wilkasy";
@@ -51,14 +47,11 @@ namespace Demo.Tests
 
             ogl.InsertAutomat();
         }
-        // dopisac metodê testow¹  - [TestMethod] musi byæ nad nazw¹ metody,
-        // w której dodamy do bazy dwa ró¿ne og³oszenia
 
         [TestMethod]
         public void TestMethod2()
         {
             Ogloszenie ogl = new Ogloszenie();
-            //ogl.Id = 1234;
             ogl.Number = 234;
             ogl.DataPublikacji = 456780011;
             ogl.Miejscowosc = "Zabki";
@@ -71,7 +64,6 @@ namespace Demo.Tests
         public void TestMethod3()
         {
             Ogloszenie ogl = new Ogloszenie();
-            //ogl.Id = 1234;
             ogl.Number = 3333344;
             ogl.DataPublikacji = 11111;
             ogl.Miejscowosc = "Wuhan";
