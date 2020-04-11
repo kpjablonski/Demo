@@ -51,28 +51,21 @@ namespace Demo.Tests
         [TestMethod]
         public void TestMethod2()
         {
-            Ogloszenie ogl = new Ogloszenie();
-            ogl.Number = 234;
-            ogl.DataPublikacji = 456780011;
-            ogl.Miejscowosc = "Zabki";
-            ogl.Plik = "ptaki";
+            Ogloszenie ogl1 = new Ogloszenie();
+            ogl1.Number = 234;
+            ogl1.DataPublikacji = 456780011;
+            ogl1.Miejscowosc = "Zabki";
+            ogl1.Plik = "ptaki";
 
-            ogl.InsertAutomat();
+            ogl1.InsertAutomat();
+
+            Ogloszenie ogl2 = new Ogloszenie();
+            ogl2.Number = 3333344;
+            ogl2.DataPublikacji = 11111;
+            ogl2.Miejscowosc = "Wuhan";
+            ogl2.Plik = "Covid19";
+
+            ogl2.InsertAutomat();
         }
-
-        [TestMethod]
-        public void TestMethod3()
-        {
-            Ogloszenie ogl = new Ogloszenie();
-            ogl.Number = 3333344;
-            ogl.DataPublikacji = 11111;
-            ogl.Miejscowosc = "Wuhan";
-            ogl.Plik = "Covid19";
-
-            ogl.InsertAutomat();
-        }
-            
-
-        
     }
 }
