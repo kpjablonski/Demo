@@ -45,8 +45,6 @@ namespace Demo.Tests
             Ogloszenie expected = new Ogloszenie();
             expected.Number = "4445566";
             expected.DataPublikacji = "30032020";
-            expected.Miejscowosc = "Wilkasy";
-            expected.Plik = "taki";
             expected.InsertAutomat();
 
             // assert
@@ -100,15 +98,11 @@ namespace Demo.Tests
             Ogloszenie expected1 = new Ogloszenie();
             expected1.Number = "234";
             expected1.DataPublikacji = "456780011";
-            expected1.Miejscowosc = "Zabki";
-            expected1.Plik = "ptaki";
-
+            
             Ogloszenie expected2 = new Ogloszenie();
             expected2.Number = "3333344";
             expected2.DataPublikacji = "11111";
-            expected2.Miejscowosc = "Wuhan";
-            expected2.Plik = "Covid19";
-
+            
             expected1.InsertAutomat();
             expected2.InsertAutomat();
             
@@ -132,9 +126,7 @@ namespace Demo.Tests
             Ogloszenie ogl = new Ogloszenie();
             ogl.Number = "4445566";
             ogl.DataPublikacji = "30032020";
-            ogl.Miejscowosc = "Wilkasy";
-            ogl.Plik = "taki";
-
+            
             ogl.InsertAutomat();
 
             Assert.ThrowsException<Exception>(ogl.InsertAutomat);

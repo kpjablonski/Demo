@@ -10,8 +10,6 @@ namespace Demo
         public long Id;
         public string Number;
         public string DataPublikacji;
-        public string Miejscowosc;
-        public string Plik;
         
         public void InsertAutomat()
         {
@@ -27,9 +25,9 @@ namespace Demo
             var insertData = new SqlCommand();
             insertData.Connection = connection2;
             insertData.CommandText = $@"
-                INSERT INTO Ads (Number, DataPublikacji, Miejscowosc, Plik)
+                INSERT INTO Ads (Number, DataPublikacji)
                 OUTPUT Inserted.Id                 
-                VALUES ('{Number}', '{DataPublikacji}', '{Miejscowosc}', '{Plik}')
+                VALUES ('{Number}', '{DataPublikacji}')
                  ";
 
             var reader = insertData.ExecuteReader();
