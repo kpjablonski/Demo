@@ -12,9 +12,14 @@ namespace Demo
         public string DataPublikacji;
         public string Miejscowosc;
         public string Plik;
-
+        
         public void InsertAutomat()
         {
+            if (Id != 0)
+            {
+                throw new Exception();
+            }
+
             var connectionString = new ConnectionStrings();
 
             //Console.WriteLine($"{Id}; { Number}; { DataPublikacji}; { Miejscowosc}; { Plik}");
@@ -25,10 +30,15 @@ namespace Demo
             var insertData = new SqlCommand();
             insertData.Connection = connection2;
             insertData.CommandText = $@"
-                 INSERT INTO Ads (Number, DataPublikacji, Miejscowosc, Plik)
-                 VALUES ('{Number}', '{DataPublikacji}', '{Miejscowosc}', '{Plik}')";
+                INSERT INTO Ads (Number, DataPublikacji, Miejscowosc, Plik)
+                OUTPUT Inserted.Id                 
+                VALUES ('{Number}', '{DataPublikacji}', '{Miejscowosc}', '{Plik}')
+                 ";
 
-            insertData.ExecuteNonQuery();
+            var reader = insertData.ExecuteReader();
+            reader.Read();
+            Id = reader.GetInt64(0);
+            
             connection2.Close();
         }
     }

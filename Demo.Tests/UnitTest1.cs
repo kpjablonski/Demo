@@ -137,19 +137,17 @@ namespace Demo.Tests
             ogl.Plik = "taki";
 
             ogl.InsertAutomat();
-            ogl.InsertAutomat();
 
-            // assert
-            throw new NotImplementedException("");
+            Exception expected = null;
+            try
+            {
+                ogl.InsertAutomat();
+            }
+            catch (Exception exception)
+            {
+                expected = exception;
+            }
+            Assert.IsNotNull(expected);
         }
-
-        // arrange
-        // act
-        // assert
-
-        // setup
-        // act
-        // assert
-        // cleanup
     }
 }

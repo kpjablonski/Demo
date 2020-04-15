@@ -8,12 +8,12 @@ namespace Demo
     {
         public string Master()
         {
-            return "Server = localhost\\SQLExpress; Database = master; Trusted_Connection = True;";
+            return "Server=localhost; Database=master; Trusted_Connection=True;";
         }
 
         public string Bzp()
         {
-            return "Server=localhost\\SQLExpress;Database=Bzp;Trusted_Connection=True;";
+            return "Server=localhost; Database=Bzp; Trusted_Connection=True;";
         }
     }
 }
