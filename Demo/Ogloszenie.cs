@@ -20,11 +20,8 @@ namespace Demo
                 throw new Exception();
             }
 
-            var connectionString = new ConnectionStrings();
-
-            //Console.WriteLine($"{Id}; { Number}; { DataPublikacji}; { Miejscowosc}; { Plik}");
             SqlConnection connection2 = new SqlConnection();
-            connection2.ConnectionString = connectionString.Bzp();
+            connection2.ConnectionString = ConnectionStrings.Bzp();
             connection2.Open();
 
             var insertData = new SqlCommand();

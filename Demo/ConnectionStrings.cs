@@ -6,12 +6,12 @@ namespace Demo
 {
     public class ConnectionStrings
     {
-        public string Master()
+        public static string Master()
         {
             return "Server=localhost; Database=master; Trusted_Connection=True;";
         }
 
-        public string Bzp()
+        public static string Bzp()
         {
             return "Server=localhost; Database=Bzp; Trusted_Connection=True;";
         }

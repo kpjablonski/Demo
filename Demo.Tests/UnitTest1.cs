@@ -19,9 +19,8 @@ namespace Demo.Tests
         [TestCleanup]
         public void Cleanup()
         {
-            var connectionString = new ConnectionStrings();
             var connection = new SqlConnection();
-            connection.ConnectionString = connectionString.Master();
+            connection.ConnectionString = ConnectionStrings.Master();
             connection.Open();
 
             var command = new SqlCommand();
@@ -66,7 +65,7 @@ namespace Demo.Tests
             var ogloszenia = new List<Ogloszenie>();
 
             var connection = new SqlConnection();
-            connection.ConnectionString = new ConnectionStrings().Bzp();
+            connection.ConnectionString = ConnectionStrings.Bzp();
 
             var command = new SqlCommand();
             command.Connection = connection;

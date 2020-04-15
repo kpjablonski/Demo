@@ -13,10 +13,8 @@ namespace Demo
         public void CreateDataBaseAndTables()
         {
             // database
-            var connectionStrings = new ConnectionStrings();
-
             var connection = new SqlConnection();
-            connection.ConnectionString = connectionStrings.Master();
+            connection.ConnectionString = ConnectionStrings.Master();
             connection.Open();
 
             var command = new SqlCommand();
@@ -29,7 +27,7 @@ namespace Demo
             command.ExecuteNonQuery();
 
             connection.Close();
-            connection.ConnectionString = connectionStrings.Bzp();
+            connection.ConnectionString = ConnectionStrings.Bzp();
 
             // table
 
