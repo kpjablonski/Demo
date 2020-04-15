@@ -138,16 +138,7 @@ namespace Demo.Tests
 
             ogl.InsertAutomat();
 
-            Exception expected = null;
-            try
-            {
-                ogl.InsertAutomat();
-            }
-            catch (Exception exception)
-            {
-                expected = exception;
-            }
-            Assert.IsNotNull(expected);
+            Assert.ThrowsException<Exception>(ogl.InsertAutomat);
         }
     }
 }
