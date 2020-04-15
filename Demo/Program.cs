@@ -7,6 +7,7 @@ namespace Demo
     {
         public static void Main(string[] args)
         {
+            
         }
 
         public void CreateDataBaseAndTables()
@@ -40,7 +41,7 @@ namespace Demo
                     CREATE TABLE Ads(
                         Id BIGINT IDENTITY(1, 1),
                         Number TEXT,
-                        DataPublikacji VARCHAR(255),
+                        DataPublikacji TEXT,
                         Miejscowosc TEXT,
                         Plik TEXT,
                     )

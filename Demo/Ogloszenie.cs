@@ -7,9 +7,9 @@ namespace Demo
 {
     public class Ogloszenie
     {
-        public int Id;
-        public long Number;
-        public long DataPublikacji;
+        public long Id;
+        public string Number;
+        public string DataPublikacji;
         public string Miejscowosc;
         public string Plik;
 
@@ -30,11 +30,6 @@ namespace Demo
 
             insertData.ExecuteNonQuery();
             connection2.Close();
-        }
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
         }
     }
 }
