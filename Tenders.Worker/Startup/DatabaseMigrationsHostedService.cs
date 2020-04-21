@@ -10,7 +10,8 @@ namespace Tenders.Startup
     {
         private readonly SqlConnectionStringBuilder bzp;
 
-        public DatabaseMigrationsHostedService(SqlConnectionStringBuilder bzp)
+        public DatabaseMigrationsHostedService(
+            SqlConnectionStringBuilder bzp)
         {
             this.bzp = bzp;
         }

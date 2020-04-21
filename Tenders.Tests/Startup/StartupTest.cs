@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
 namespace Tenders.Startup
@@ -9,8 +10,7 @@ namespace Tenders.Startup
         [TestMethod]
         public async Task Test()
         {
-            var builder = Program.Builder();
-            var app = builder.Build();
+            IHost app = Program.Builder().Build();
             await app.StartAsync();
             await app.StopAsync();
         }

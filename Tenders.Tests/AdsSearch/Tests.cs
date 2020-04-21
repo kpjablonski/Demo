@@ -25,6 +25,12 @@ namespace Tenders.AdsSearch
             bzp.Pooling = false;
         }
 
+        [TestMethod]
+        public void MyTestMethod()
+        {
+
+        }
+
         [TestInitialize]
         public async Task Initialize()
         {
@@ -36,7 +42,5 @@ namespace Tenders.AdsSearch
         {
             await App.StopAsync();
         }
-
-        
     }
 }

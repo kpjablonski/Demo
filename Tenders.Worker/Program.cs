@@ -12,34 +12,41 @@ namespace Tenders
     {
         public static void Main()
         {
+            //IHostBuilder builder = Builder();
+            //IHost host = builder.Build();
+            //host.Run();
+
             Builder().Build().Run();
         }
 
-        public static IHostBuilder Builder() => Host
-            .CreateDefaultBuilder()
-            .ConfigureServices(services =>
-            {
-                services.AddHostedService<DatabaseMigrationsHostedService>();
-            })
-            .ConfigureServices(services =>
-            {
-                services.AddSingleton<QuartzJobFactory>();
-                services.AddSingleton(new QuartzJobRegistry());
-                services.AddTransient<QuartzJobExecutor>();
-                services.AddHostedService<QuartzSchedulerHostedService>();
-            })
-            .ConfigureServices(services =>
-            {
-                services.AddSingleton(new SqlConnectionStringBuilder
+        public static IHostBuilder Builder()
+        {
+            return Host
+                .CreateDefaultBuilder()
+                .ConfigureServices(services =>
                 {
-                    DataSource = "localhost",
-                    InitialCatalog = "Bzp",
-                    IntegratedSecurity = true,
+                    services.AddHostedService<DatabaseMigrationsHostedService>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton<QuartzJobFactory>();
+                    services.AddSingleton(new QuartzJobRegistry());
+                    services.AddTransient<QuartzJobExecutor>();
+                    services.AddHostedService<QuartzSchedulerHostedService>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton(new SqlConnectionStringBuilder
+                    {
+                        DataSource = "localhost",
+                        InitialCatalog = "Bzp",
+                        IntegratedSecurity = true,
+                    });
+                })
+                .ConfigureServices(services =>
+                {
                 });
-            })
-            .ConfigureServices(services =>
-            {                
-            });
+        }
 
         private static IServiceCollection Repeat<T>(this IServiceCollection services) where T : class, IJob
         {

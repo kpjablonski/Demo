@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
-using System;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;

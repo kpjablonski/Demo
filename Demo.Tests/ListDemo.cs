@@ -29,11 +29,25 @@ namespace Demo.Tests
             
             Assert.AreEqual(first, second);
         }
+
+        
     }
 
     public class Ad
     {
-
         public string Number { get; set; }
+    }
+
+    public interface IFactory
+    {
+        string Create(int times);
+    }
+
+    public class Factory1 : IFactory
+    {
+        public string Create(int times)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
