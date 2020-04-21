@@ -19,6 +19,23 @@ namespace Tenders.Startup
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             await CreateDatabaseAsync();
+            await CreateAdsSearchCriteriaTableAsync();
+        }
+
+        private async Task CreateAdsSearchCriteriaTableAsync()
+        {
+            using var connection = new SqlConnection();
+            connection.ConnectionString = bzp.ConnectionString;
+            await connection.OpenAsync();
+
+            using SqlCommand command = connection.CreateCommand();
+            command.CommandText = @"
+            IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE name = 'AdsSearchCriteria' AND xtype = 'U')
+            BEGIN
+                CREATE TABLE AdsSearchCriteria (PublicationDate Date);
+                INSERT INTO AdsSearchCriteria (PublicationDate) VALUES ('2017-05-1');
+            END;";
+            await command.ExecuteNonQueryAsync();
         }
 
         private async Task CreateDatabaseAsync()

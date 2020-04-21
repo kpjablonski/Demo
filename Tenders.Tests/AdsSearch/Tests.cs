@@ -26,10 +26,65 @@ namespace Tenders.AdsSearch
         }
 
         [TestMethod]
-        public void MyTestMethod()
+        public async Task MyTestMethod1()
         {
+            await App.ExecuteAsync<AdsSearchJob>();
 
+            using var connection = new SqlConnection();
+            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
+            await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
+            object scalar = await command.ExecuteScalarAsync();
+            var publicationDate = (DateTime)scalar;
+
+            Assert.AreEqual(new DateTime(2017, 05, 02), publicationDate);
+
+            await connection.CloseAsync();
         }
+
+        [TestMethod]
+        public async Task MyTestMethod2()
+        {
+            await App.ExecuteAsync<AdsSearchJob>();
+            await App.ExecuteAsync<AdsSearchJob>();
+
+            using var connection = new SqlConnection();
+            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
+            await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
+            object scalar = await command.ExecuteScalarAsync();
+            var publicationDate = (DateTime)scalar;
+
+            Assert.AreEqual(new DateTime(2017, 05, 03), publicationDate);
+
+            await connection.CloseAsync();
+        }
+
+        [TestMethod]
+        public async Task MyTestMethod4()
+        {
+            await App.ExecuteAsync<AdsSearchJob>();
+            await App.ExecuteAsync<AdsSearchJob>();
+            await App.ExecuteAsync<AdsSearchJob>();
+
+            using var connection = new SqlConnection();
+            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
+            await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
+            object scalar = await command.ExecuteScalarAsync();
+            var searchCriteriaPublicationDate = (DateTime)scalar;
+
+            Assert.AreEqual(new DateTime(2017, 05, 04), searchCriteriaPublicationDate);
+
+            await connection.CloseAsync();
+        }
+
 
         [TestInitialize]
         public async Task Initialize()

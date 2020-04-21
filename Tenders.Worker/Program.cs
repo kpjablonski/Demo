@@ -45,6 +45,7 @@ namespace Tenders
                 })
                 .ConfigureServices(services =>
                 {
+                    services.Repeat<AdsSearch.AdsSearchJob>();
                 });
         }
 
