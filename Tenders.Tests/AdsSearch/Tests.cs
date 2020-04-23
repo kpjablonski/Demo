@@ -28,17 +28,13 @@ namespace Tenders.AdsSearch
         [TestMethod]
         public async Task MyTestMethod1()
         {
-            await App.ExecuteAsync<AdsSearchJob>();
+            await App.ExecuteJobAsync<AdsSearchJob>();
 
-            using var connection = new SqlConnection();
-            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
-            await connection.OpenAsync();
+            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().Create();
 
-            using var command = connection.CreateCommand();
-            command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
-            var publicationDate = (DateTime)await command.ExecuteScalarAsync();
+            AdsSearchCriteria searchCriteria = await connection.GetAdsSearchCriteriaAsync();
 
-            Assert.AreEqual(new DateTime(2017, 05, 02), publicationDate);
+            Assert.AreEqual(new DateTime(2017, 05, 02), searchCriteria.PublicationDate);
 
             await connection.CloseAsync();
         }
@@ -46,20 +42,15 @@ namespace Tenders.AdsSearch
         [TestMethod]
         public async Task MyTestMethod2()
         {
-            await App.ExecuteAsync<AdsSearchJob>();
-            await App.ExecuteAsync<AdsSearchJob>();
-            await App.ExecuteAsync<AdsSearchJob>();
+            await App.ExecuteJobAsync<AdsSearchJob>();
+            await App.ExecuteJobAsync<AdsSearchJob>();
+            await App.ExecuteJobAsync<AdsSearchJob>();
 
-            using var connection = new SqlConnection();
-            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
-            await connection.OpenAsync();
+            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().Create();
 
-            using var command = connection.CreateCommand();
-            command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
-            object scalar = await command.ExecuteScalarAsync();
-            var searchCriteriaPublicationDate = (DateTime)scalar;
+            AdsSearchCriteria searchCriteria =  await connection.GetAdsSearchCriteriaAsync();
 
-            Assert.AreEqual(new DateTime(2017, 05, 04), searchCriteriaPublicationDate);
+            Assert.AreEqual(new DateTime(2017, 05, 04), searchCriteria.PublicationDate);
 
             await connection.CloseAsync();
         }
@@ -67,29 +58,21 @@ namespace Tenders.AdsSearch
         [TestMethod]
         public async Task MyTestMethod3()
         {
-            using var connection = new SqlConnection();
-            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
-            await connection.OpenAsync();
+            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().Create();
 
-            
-            DateTime searchExecutionDateTime = DateTime.Now;
+            // arrange
+            var searchCriteriaBeforeJobExecution = new AdsSearchCriteria
             {
-                using SqlCommand command = connection.CreateCommand();
-                command.CommandText = "UPDATE AdsSearchCriteria SET PublicationDate = @PublicationDate;";
-                command.Parameters.Add(new SqlParameter("@PublicationDate", searchExecutionDateTime.Date));
-                await command.ExecuteNonQueryAsync();
-            }
-
-            await App.ExecuteAsync<AdsSearchJob>();
-
-            { 
-                using var command = connection.CreateCommand();
-                command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
-                object scalar = await command.ExecuteScalarAsync();
-                var searchCriteriaPublicationDate = (DateTime)scalar;
-                Assert.AreEqual(searchExecutionDateTime.Date, searchCriteriaPublicationDate);
-            }
-
+                PublicationDate = DateTime.Now.Date
+            };
+            await connection.SaveAsync(searchCriteriaBeforeJobExecution);
+            
+            // act
+            await App.ExecuteJobAsync<AdsSearchJob>();
+            
+            // assert
+            AdsSearchCriteria searchCriteriaAfterJobExecution = await connection.GetAdsSearchCriteriaAsync();
+            Assert.AreEqual(searchCriteriaBeforeJobExecution.PublicationDate, searchCriteriaAfterJobExecution.PublicationDate);
             await connection.CloseAsync();
         }
 

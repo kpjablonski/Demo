@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using System.Data.SqlClient;
 using System.Linq;
+using Tenders.AdsSearch;
 using Tenders.Startup;
 
 namespace Tenders
@@ -37,6 +38,7 @@ namespace Tenders
                 })
                 .ConfigureServices(services =>
                 {
+                    services.AddTransient<SqlConnectionFactory>();
                     services.AddSingleton(new SqlConnectionStringBuilder
                     {
                         DataSource = "localhost",

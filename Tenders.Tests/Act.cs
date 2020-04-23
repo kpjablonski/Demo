@@ -10,7 +10,7 @@ namespace Tenders
 {
     public static class Act
     {
-        public static async Task ExecuteAsync<T>(this IHost host) where T : IJob
+        public static async Task ExecuteJobAsync<T>(this IHost host) where T : IJob
         {
             var executor = host.Services.GetRequiredService<QuartzJobExecutor>();
             await executor.Execute(new QuartzTestExecutionContext<T>());
