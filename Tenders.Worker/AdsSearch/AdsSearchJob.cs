@@ -1,8 +1,6 @@
 ﻿using Quartz;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Tenders.AdsSearch
@@ -18,16 +16,18 @@ namespace Tenders.AdsSearch
 
         public async Task Execute(IJobExecutionContext context)
         {
+            DateTime searchExecutionDate = DateTime.Now.Date;
             DateTime publicationDate = await GetSearchCriteria();
             DateTime nextPublicationDate = publicationDate.AddDays(1);
-            
+            if (nextPublicationDate > searchExecutionDate)
+            {
+                nextPublicationDate = nextPublicationDate.AddDays(-1);
+            }
             using var connection = new SqlConnection();
             connection.ConnectionString = bzp.ConnectionString;
             await connection.OpenAsync();
 
             using SqlCommand command = connection.CreateCommand();
-            //UPDATE AdsSearchCriteria SET PublicationDate = '2017-05-02'
-
             command.CommandText = "UPDATE AdsSearchCriteria SET PublicationDate = @PublicationDate;";
             command.Parameters.Add(new SqlParameter("@PublicationDate", nextPublicationDate));
             await command.ExecuteNonQueryAsync();

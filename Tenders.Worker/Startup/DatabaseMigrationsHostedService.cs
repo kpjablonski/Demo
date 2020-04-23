@@ -33,7 +33,7 @@ namespace Tenders.Startup
             IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE name = 'AdsSearchCriteria' AND xtype = 'U')
             BEGIN
                 CREATE TABLE AdsSearchCriteria (PublicationDate Date);
-                INSERT INTO AdsSearchCriteria (PublicationDate) VALUES ('2017-05-1');
+                INSERT INTO AdsSearchCriteria (PublicationDate) VALUES ('2017-05-01');
             END;";
             await command.ExecuteNonQueryAsync();
         }

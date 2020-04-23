@@ -32,7 +32,8 @@ namespace Tenders
                     services.AddSingleton<QuartzJobFactory>();
                     services.AddSingleton(new QuartzJobRegistry());
                     services.AddTransient<QuartzJobExecutor>();
-                    services.AddHostedService<QuartzSchedulerHostedService>();
+                    //TODO: uncomment later
+                    //services.AddHostedService<QuartzSchedulerHostedService>();
                 })
                 .ConfigureServices(services =>
                 {

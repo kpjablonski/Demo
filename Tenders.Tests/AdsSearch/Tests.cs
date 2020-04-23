@@ -36,8 +36,7 @@ namespace Tenders.AdsSearch
 
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
-            object scalar = await command.ExecuteScalarAsync();
-            var publicationDate = (DateTime)scalar;
+            var publicationDate = (DateTime)await command.ExecuteScalarAsync();
 
             Assert.AreEqual(new DateTime(2017, 05, 02), publicationDate);
 
@@ -46,26 +45,6 @@ namespace Tenders.AdsSearch
 
         [TestMethod]
         public async Task MyTestMethod2()
-        {
-            await App.ExecuteAsync<AdsSearchJob>();
-            await App.ExecuteAsync<AdsSearchJob>();
-
-            using var connection = new SqlConnection();
-            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
-            await connection.OpenAsync();
-
-            using var command = connection.CreateCommand();
-            command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
-            object scalar = await command.ExecuteScalarAsync();
-            var publicationDate = (DateTime)scalar;
-
-            Assert.AreEqual(new DateTime(2017, 05, 03), publicationDate);
-
-            await connection.CloseAsync();
-        }
-
-        [TestMethod]
-        public async Task MyTestMethod4()
         {
             await App.ExecuteAsync<AdsSearchJob>();
             await App.ExecuteAsync<AdsSearchJob>();
@@ -81,6 +60,35 @@ namespace Tenders.AdsSearch
             var searchCriteriaPublicationDate = (DateTime)scalar;
 
             Assert.AreEqual(new DateTime(2017, 05, 04), searchCriteriaPublicationDate);
+
+            await connection.CloseAsync();
+        }
+
+        [TestMethod]
+        public async Task MyTestMethod3()
+        {
+            using var connection = new SqlConnection();
+            connection.ConnectionString = App.Services.GetRequiredService<SqlConnectionStringBuilder>().ConnectionString;
+            await connection.OpenAsync();
+
+            
+            DateTime searchExecutionDateTime = DateTime.Now;
+            {
+                using SqlCommand command = connection.CreateCommand();
+                command.CommandText = "UPDATE AdsSearchCriteria SET PublicationDate = @PublicationDate;";
+                command.Parameters.Add(new SqlParameter("@PublicationDate", searchExecutionDateTime.Date));
+                await command.ExecuteNonQueryAsync();
+            }
+
+            await App.ExecuteAsync<AdsSearchJob>();
+
+            { 
+                using var command = connection.CreateCommand();
+                command.CommandText = "SELECT PublicationDate FROM AdsSearchCriteria";
+                object scalar = await command.ExecuteScalarAsync();
+                var searchCriteriaPublicationDate = (DateTime)scalar;
+                Assert.AreEqual(searchExecutionDateTime.Date, searchCriteriaPublicationDate);
+            }
 
             await connection.CloseAsync();
         }
