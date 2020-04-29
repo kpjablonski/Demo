@@ -26,6 +26,7 @@ namespace Tenders
                 .CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
+                    services.AddTransient<IBzpWebsite, BzpWebsite>();
                     services.AddHostedService<DatabaseMigrationsHostedService>();
                 })
                 .ConfigureServices(services =>

@@ -10,7 +10,7 @@ namespace Tenders.AdsSearch
         {
             this.bzp = bzp;
         }
-        public async Task<SqlConnection> Create()
+        public async Task<SqlConnection> CreateAsync()
         {
             var connection = new SqlConnection();
             connection.ConnectionString = bzp.ConnectionString;

@@ -13,26 +13,57 @@ namespace Demo.Tests
         [TestMethod]
         public void MyTestMethod()
         {
-            IServiceCollection services = new ServiceCollection();
-            services.AddTransient<Service1>();
-            IServiceProvider provider = services.BuildServiceProvider();
-            Service1 service1 = provider.GetRequiredService<Service1>();
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IElixirClient, ElixirClient>();
+            serviceCollection.AddTransient<Service1>();
 
+            //serviceCollection.AddTransient<IElixirClient, ElixirClientMock>();
+
+            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            //Service1 service1 = new Service1(new ElixirClientMock());
             
+            // prod:
+            //Service1 service2 = new Service1(new ElixirClientMock());
+            
+            
+            Service1 service1 = serviceProvider
+                .GetRequiredService<Service1>();
+
+
         }
     }
 
     public class Service1
     {
-        private readonly ILogger logger;
-        public Service1(ILogger logger)
+        private readonly IElixirClient elixir;
+        
+        public Service1(IElixirClient elixir)
         {
-            this.logger = logger;
+            this.elixir = elixir;
         }
 
         public void Do()
         {
-            logger.LogInformation("Do completed");
+            elixir.PrzelejKase(1, "1231234");
+        }
+    }
+
+    public interface IElixirClient
+    {
+        void PrzelejKase(decimal money, string account);
+    }
+    public class ElixirClient : IElixirClient
+    {
+        public void PrzelejKase(decimal money, string account)
+        {
+        }
+    }
+    public class ElixirClientMock : IElixirClient
+    {
+        public void PrzelejKase(decimal money, string account)
+        {
+            throw new NotImplementedException();
         }
     }
 }

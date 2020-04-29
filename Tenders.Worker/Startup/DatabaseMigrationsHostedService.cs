@@ -20,6 +20,22 @@ namespace Tenders.Startup
         {
             await CreateDatabaseAsync();
             await CreateAdsSearchCriteriaTableAsync();
+            await CreateAdsTableAsync();
+        }
+
+        private async Task CreateAdsTableAsync()
+        {
+            using var connection = new SqlConnection();
+            connection.ConnectionString = bzp.ConnectionString;
+            await connection.OpenAsync();
+
+            using SqlCommand command = connection.CreateCommand();
+            command.CommandText = @"
+            IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE name = 'Ads' AND xtype = 'U')
+            BEGIN
+                CREATE TABLE Ads (Number TEXT, Url TEXT);
+            END;";
+            await command.ExecuteNonQueryAsync();
         }
 
         private async Task CreateAdsSearchCriteriaTableAsync()

@@ -5,6 +5,7 @@ using System;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Tenders.Startup;
+using System.Collections.Generic;
 
 namespace Tenders.AdsSearch
 {
@@ -17,7 +18,8 @@ namespace Tenders.AdsSearch
         {
             App = Program.Builder()
                 .ConfigureServices(services => services
-                    .AddHostedService<DropDatabaseHostedService>())
+                    .AddHostedService<DropDatabaseHostedService>()
+                    .AddTransient<IBzpWebsite, BzpWebsiteMock>())
                 .Build();
 
             var bzp = App.Services.GetRequiredService<SqlConnectionStringBuilder>();
@@ -26,11 +28,11 @@ namespace Tenders.AdsSearch
         }
 
         [TestMethod]
-        public async Task MyTestMethod1()
+        public async Task AdsSearchCriteriaChangesProperly1()
         {
             await App.ExecuteJobAsync<AdsSearchJob>();
 
-            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().Create();
+            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().CreateAsync();
 
             AdsSearchCriteria searchCriteria = await connection.GetAdsSearchCriteriaAsync();
 
@@ -40,14 +42,13 @@ namespace Tenders.AdsSearch
         }
 
         [TestMethod]
-        public async Task MyTestMethod2()
+        public async Task AdsSearchCriteriaChangesProperly2()
         {
             await App.ExecuteJobAsync<AdsSearchJob>();
             await App.ExecuteJobAsync<AdsSearchJob>();
             await App.ExecuteJobAsync<AdsSearchJob>();
 
-            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().Create();
-
+            using SqlConnection connection = await App.Services.GetRequiredService<SqlConnectionFactory>().CreateAsync();
             AdsSearchCriteria searchCriteria =  await connection.GetAdsSearchCriteriaAsync();
 
             Assert.AreEqual(new DateTime(2017, 05, 04), searchCriteria.PublicationDate);
@@ -56,9 +57,9 @@ namespace Tenders.AdsSearch
         }
 
         [TestMethod]
-        public async Task MyTestMethod3()
+        public async Task AdsSearchCriteriaChangesProperly3()
         {
-            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().Create();
+            using var connection = await App.Services.GetRequiredService<SqlConnectionFactory>().CreateAsync();
 
             // arrange
             var searchCriteriaBeforeJobExecution = new AdsSearchCriteria
@@ -74,6 +75,35 @@ namespace Tenders.AdsSearch
             AdsSearchCriteria searchCriteriaAfterJobExecution = await connection.GetAdsSearchCriteriaAsync();
             Assert.AreEqual(searchCriteriaBeforeJobExecution.PublicationDate, searchCriteriaAfterJobExecution.PublicationDate);
             await connection.CloseAsync();
+        }
+
+        [TestMethod]
+        public async Task PersistingAds1()
+        {
+            var connectionFactory = App.Services.GetRequiredService<SqlConnectionFactory>();
+            await using SqlConnection connection = await connectionFactory.CreateAsync();
+
+            await App.ExecuteJobAsync<AdsSearchJob>();
+
+            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync();
+            Assert.AreEqual(3, actual.Count);
+            
+            AdSearchAd element1 = actual[0];
+            Assert.AreEqual("Number1", element1.Number);
+            Assert.AreEqual("Url1", element1.Url);
+        }
+
+        [TestMethod]
+        public async Task PersistingAds2()
+        {
+            var connectionFactory = App.Services.GetRequiredService<SqlConnectionFactory>();
+            await using SqlConnection connection = await connectionFactory.CreateAsync();
+
+            await App.ExecuteJobAsync<AdsSearchJob>();
+            await App.ExecuteJobAsync<AdsSearchJob>();
+
+            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync();
+            Assert.AreEqual(3, actual.Count);
         }
 
 
