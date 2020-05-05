@@ -20,6 +20,7 @@ namespace Tenders.AdsSearch
                 var ad = new AdSearchAd();
                 ad.Number = (string)reader["Number"];
                 ad.Url = (string)reader["Url"];
+                ad.PublicationDate = (string)reader["PublicationDate"];
                 ads.Add(ad);
             }
 
@@ -31,9 +32,10 @@ namespace Tenders.AdsSearch
             foreach (var ad in ads)
             {
                 await using SqlCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Ads (Number, Url) VALUES (@Number, @Url)";
+                command.CommandText = "INSERT INTO Ads (Number, Url, PublicationDate) VALUES (@Number, @Url, @PublicationDate)";
                 command.Parameters.Add(new SqlParameter("@Number", ad.Number));
                 command.Parameters.Add(new SqlParameter("@Url", ad.Url));
+                command.Parameters.Add(new SqlParameter("@PublicationDate", ad.PublicationDate));
                 await command.ExecuteNonQueryAsync();
             }
         }

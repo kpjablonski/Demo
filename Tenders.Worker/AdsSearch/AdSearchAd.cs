@@ -9,6 +9,8 @@ namespace Tenders.AdsSearch
     {
         public string Number { get; set; }
         public string Url { get; set; }
+        public string PublicationDate { get; set; }
+
         // PublicationDate - przyda się do optymalizacji
     }
 }

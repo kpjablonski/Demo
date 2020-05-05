@@ -15,16 +15,20 @@ namespace Tenders.AdsSearch
                     {
                         Number = "Number1",
                         Url = "Url1",
+                        PublicationDate = "PublicationDate1"
                     },
                     new AdSearchAd
                     {
                         Number = "Number2",
-                        Url = "Url2"
+                        Url = "Url2",
+                        PublicationDate = "PublicationDate2"
+
                     },
                     new AdSearchAd
                     {
                         Number = "Number3",
-                        Url = "Url3"
+                        Url = "Url3",
+                        PublicationDate = "PublicationDate3"
                     }
                 }
             };

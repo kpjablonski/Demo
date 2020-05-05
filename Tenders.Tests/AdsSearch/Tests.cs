@@ -91,6 +91,7 @@ namespace Tenders.AdsSearch
             AdSearchAd element1 = actual[0];
             Assert.AreEqual("Number1", element1.Number);
             Assert.AreEqual("Url1", element1.Url);
+            Assert.AreEqual("PublicationDate1", element1.PublicationDate);
         }
 
         [TestMethod]
