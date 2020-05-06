@@ -31,7 +31,7 @@ namespace Tenders.AdsSearch
             AdsSearchResult searchResult = await website.SearchAsync(searchCriteria);
 
             // 2. pobierzemy ogłoszenia z bazy ktore mamy
-            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync(); // todo: optymalizacja - pobrać tylko te ogłoszenia, których data publikacji jest taka sama jak data z searchCriteria
+            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync(searchCriteria.PublicationDate); // todo: optymalizacja - pobrać tylko te ogłoszenia, których data publikacji jest taka sama jak data z searchCriteria
             List<string> actualNumbers = actual.Select(s => s.Number).ToList();
 
             // 3. nowe ogłoszenia

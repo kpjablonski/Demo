@@ -85,7 +85,7 @@ namespace Tenders.AdsSearch
 
             await App.ExecuteJobAsync<AdsSearchJob>();
 
-            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync();
+            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync(new DateTime(2017, 05, 01));
             Assert.AreEqual(3, actual.Count);
             
             AdSearchAd element1 = actual[0];
@@ -94,7 +94,7 @@ namespace Tenders.AdsSearch
         }
 
         [TestMethod]
-        public async Task PersistingAds2()
+        public async Task CannotDuplicateAdNumber()
         {
             var connectionFactory = App.Services.GetRequiredService<SqlConnectionFactory>();
             await using SqlConnection connection = await connectionFactory.CreateAsync();
@@ -102,10 +102,16 @@ namespace Tenders.AdsSearch
             await App.ExecuteJobAsync<AdsSearchJob>();
             await App.ExecuteJobAsync<AdsSearchJob>();
 
-            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync();
+            //TODO: zmienić asercje, na taką, która sprawdzić że nie można zduplikować danych w bazie danych, gdy nieprawidłowo zadziała stroba bzp, lub sam browser driver ktorego napiszemy
+
+            List<AdSearchAd> actual = await connection.ListAdSearchAdsAsync(new DateTime(2017, 05, 01));
             Assert.AreEqual(3, actual.Count);
+
+            List<AdSearchAd> actual2 = await connection.ListAdSearchAdsAsync(new DateTime(2017, 05, 02));
+            Assert.AreEqual(0, actual2.Count);
         }
 
+        // TODO: brakuje nam testu funkcjonalności, że job będzie dodawał dokładnie te ogłoszenia, ze wszystkich znalezionych ogłoszeń, których nie mamy jeszcze w bazie
 
         [TestInitialize]
         public async Task Initialize()

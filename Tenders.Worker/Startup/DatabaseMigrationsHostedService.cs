@@ -33,7 +33,8 @@ namespace Tenders.Startup
             command.CommandText = @"
             IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE name = 'Ads' AND xtype = 'U')
             BEGIN
-                CREATE TABLE Ads (Number TEXT, Url TEXT);
+                CREATE TABLE Ads (Number VARCHAR(255), Url TEXT, PublicationDate Date);
+                CREATE UNIQUE INDEX IND_Number_Unique ON dbo.Ads (Number);
             END;";
             await command.ExecuteNonQueryAsync();
         }

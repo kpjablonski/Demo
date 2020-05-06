@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,6 @@ namespace Tenders.AdsSearch
     {
         public string Number { get; set; }
         public string Url { get; set; }
-        // PublicationDate - przyda się do optymalizacji
+        public DateTime PublicationDate { get; set; }
     }
 }
